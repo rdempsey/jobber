@@ -8,7 +8,7 @@ Jobber determines whether a job application meets a set of minimum qualification
 
 * The job application will be a list of questions, each of which has a question id and an answer.
 * The qualifications will be a list of question ids, each associated with a list of acceptable answers.
-* If an application fails to answer any one of these questions with an acceptable answer, the application should be rejected. Otherwise the application should be accepted.
+* If an applicant fails to answer any one of these questions with an acceptable answer, their application should be rejected. Otherwise the application should be accepted.
 * The employer should be able to view only the accepted applications.
 
 Jobber achieves the following by:
@@ -50,6 +50,6 @@ Jobber then decides to either accept or reject each application.
 
 Additionally:
 
-* Accepted applications must answer all questions correctly.
+* Accepted applications must have all questions answered correctly.
 * Accepted applications must be shown to the employer.
 * Unaccepted applications must not be shown to the employer.
