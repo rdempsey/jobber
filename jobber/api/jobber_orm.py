@@ -1,4 +1,5 @@
 import json
+from os import getenv
 from sqlalchemy import Boolean, Column, DateTime, String, TypeDecorator, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -69,7 +70,10 @@ class JobApplication(Base):
 
 
 def init_db(uri):
-    engine = create_engine(uri, convert_unicode=True)
+    db_dir= getenv('DB_DIR')
+    db_file_name = getenv('DB_FILE_NAME')
+    db_engine = 'sqlite:///{}/{}'.format(db_dir, db_file_name)
+    engine = create_engine(db_engine, convert_unicode=True)
     db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
     Base.query = db_session.query_property()
     Base.metadata.create_all(bind=engine)

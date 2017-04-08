@@ -1,9 +1,8 @@
 import connexion
-from connexion import NoContent
 import datetime
 import logging
-import jobber_orm as jorm
 from os import getenv
+import jobber_orm as jorm
 import jobber_api_utils as jau
 
 db_session = None
@@ -209,7 +208,7 @@ def delete_job_application(job_application_id):
 
 logging.basicConfig(level=logging.INFO)
 db_session = jorm.init_db('sqlite:///:memory:')
-app_port = int(getenv('APP_PORT', 8080))
+app_port = int(getenv('API_PORT', 8080))
 
 app = connexion.FlaskApp(__name__,
                         specification_dir='.',

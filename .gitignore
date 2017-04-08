@@ -78,3 +78,6 @@ ENV/
 # Log files
 logs/*
 tests/logs
+
+# Local fancy
+.condaauto
