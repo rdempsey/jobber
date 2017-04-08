@@ -5,10 +5,6 @@ MAINTAINER Robert Dempsey <robertonrails@gmail.com>
 ENV PYTHONBUFFERED 1
 RUN apt-get update -y -qq
 
-# Install the requirements
-COPY requirements.txt /tmp/
-RUN pip install -r /tmp/requirements.txt
-
 # Set up the code directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -16,6 +12,9 @@ WORKDIR /usr/src/app
 # Copy over the code
 COPY jobber/api api/
 COPY tests tests/
+
+# Install the requirements
+RUN pip install -r api/requirements.txt
 
 # Run that beautiful Jobber API
 CMD ["python", "api/jobber.py"]
