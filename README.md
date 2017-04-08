@@ -19,12 +19,12 @@ Accepting a list of questions with an acceptable answer for each question:
     {
         Id: "id1",
         Question: "string",
-        "Answer": "string" }
-    ,
+        Answer: "string"
+    },
     {
         Id: "id2",
         Question: "string",
-        "Answer": "string"
+        Answer: "string"
     },
     ...
 ]
