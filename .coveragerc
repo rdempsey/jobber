@@ -1,0 +1,22 @@
+[run]
+omit =
+  # Bare bones app stuff
+  jobber/jobber.py
+  jobber/__init__.py
+  jobber/version.py
+
+  # API spec
+  jobber/jobber_api.yaml
+
+  # Docker files
+  docker-compose.yml
+  Dockerfile
+
+  # Coverage and other reports
+  README
+  htmlcov/*
+
+[html]
+directory = htmlcov
+title = Jobber Coverage Report
+title = Jobber Coverage Report

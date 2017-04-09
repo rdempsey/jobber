@@ -1,0 +1,238 @@
+swagger: '2.0'
+info:
+  title: Jobber API
+  version: "1.0.0"
+basePath: /1.0
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /questions:
+    get:
+      tags: [Questions]
+      operationId: jobber.get_questions
+      summary: Get all of the questions and answers
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Return questions
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+  /questions/{question_id}:
+    get:
+      tags: [Questions]
+      operationId: jobber.get_question
+      summary: Get a single question
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/question_id'
+      responses:
+        200:
+          description: Returns the question
+          schema:
+            $ref: '#/definitions/Question'
+        404:
+          description: Question doesn't exist
+    put:
+      tags: [Questions]
+      operationId: jobber.put_question
+      summary: Create or update a question
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/question_id'
+        - name: question
+          in: body
+          schema:
+            $ref: '#/definitions/Question'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Question updated
+        201:
+          description: New question created
+    delete:
+      tags: [Questions]
+      operationId: jobber.delete_question
+      summary: Remove a question
+      parameters:
+        - $ref: '#/parameters/question_id'
+      responses:
+        200:
+          description: Question was deleted
+        404:
+          description: Question was not found
+  /job-applications:
+    get:
+      tags: [JobApplications]
+      operationId: jobber.get_job_applications
+      summary: Get all of the accepted job applications
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Return accepted job applications
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JobApplication'
+  /job-applications/{job_application_id}:
+    get:
+      tags: [JobApplications]
+      operationId: jobber.get_job_application
+      summary: Get a single job application
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/job_application_id'
+      responses:
+        200:
+          description: Returns the job application
+          schema:
+            $ref: '#/definitions/JobApplication'
+        404:
+          description: Job application doesn't exist
+    put:
+      tags: [JobApplications]
+      operationId: jobber.put_job_application
+      summary: Create or update a job application
+      produces:
+        - application/json
+      parameters:
+        - $ref: '#/parameters/job_application_id'
+        - name: job_application
+          in: body
+          schema:
+            $ref: '#/definitions/JobApplication'
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Job application updated
+        201:
+          description: Job application created
+    delete:
+      tags: [JobApplications]
+      operationId: jobber.delete_job_application
+      summary: Remove a job application
+      parameters:
+        - $ref: '#/parameters/job_application_id'
+      responses:
+        200:
+          description: Job application was deleted
+        404:
+          description: Job application was not found
+
+parameters:
+  question_id:
+    name: question_id
+    description: Question's unique identifier
+    in: path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+  job_application_id:
+    name: job_application_id
+    description: Job application's unique identifier
+    in: path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-]+$"
+
+definitions:
+  Question:
+    required:
+      - id
+      - question
+      - answer
+    properties:
+      id:
+        type: string
+        description: Unique identifier of the question
+        example: "Id1"
+        minLength: 1
+        maxLength: 255
+      question:
+        type: string
+        description: The question to ask the applicant
+        example: "What is your quest?"
+        minLength: 1
+        maxLength: 255
+      answer:
+        type: string
+        description: The acceptable answer to the question
+        example: "Holy grail"
+        minLength: 1
+        maxLength: 255
+      created_at:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2015-07-07T15:49:51.230+02:00"
+        readOnly: true
+      updated_at:
+        type: string
+        format: date-time
+        description: Most recent updated time
+        example: "2015-07-07T15:51:51.230+02:00"
+        readOnly: true
+  JobApplication:
+    description: Job application
+    required:
+      - name
+      - applicant_responses
+    properties:
+      id:
+        type: string
+        description: Unique identifier of the job application
+        example: "SHJGGHGHDJ"
+      name:
+        type: string
+        description: Name of the applicant
+        example: "Joe Dirt"
+        minLength: 1
+        maxLength: 255
+      applicant_responses:
+        type: array
+        description: List of question ids and their associated answers
+        items:
+          $ref: '#/definitions/JobApplicationResponse'
+      accepted:
+        type: boolean
+        description: Accepted status of the job application
+        readOnly: true
+      created_at:
+        type: string
+        format: date-time
+        description: Creation time
+        example: "2015-07-07T15:49:51.230+02:00"
+        readOnly: true
+      updated_at:
+        type: string
+        format: date-time
+        description: Most recent updated time
+        example: "2015-07-07T15:51:51.230+02:00"
+        readOnly: true
+  JobApplicationResponse:
+    type: object
+    description: Job application response
+    required:
+      - id
+      - answer
+    properties:
+      id:
+        type: string
+        description: ID of the question
+        example: "Id1"
+      answer:
+        type: string
+        description: Answer to the question
+        example: "I am on a question for the Holy Grail"
+        minLength: 1
+        maxLength: 255

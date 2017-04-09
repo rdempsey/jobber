@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>Questions</h2>
+    <fieldset>
+        <form action="{{ url_for('update_question', question_id=question['id']) }}" method="post" class="form-horizontal">
+            <div class="form-group">
+              <label for="inputQuestion" class="col-lg-2 control-label">Question</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id="inputQuestion" name="question" value="{{ question['question'] }}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputAnswer" class="col-lg-2 control-label">Acceptable Answer</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id="inputAnswer" name="answer" value="{{ question['answer'] }}">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                  <button type="reset" class="btn btn-default">Reset</button>
+                  <a href="{{ url_for('show_questions') }}" class="btn btn-default">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+        </form>
+    </fieldset>
+{% endblock %}

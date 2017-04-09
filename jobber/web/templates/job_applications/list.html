@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>Job Applications</h2>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Applicant</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job_application in job_applications %}
+            <tr>
+                <td>{{ job_application['name'] }}</td>
+                <td>{{ momentjs(job_application['created_at']).format('LLL') }}</td>
+                <td><a href="{{ url_for('show_job_application', job_application_id=job_application['id']) }}">View</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
