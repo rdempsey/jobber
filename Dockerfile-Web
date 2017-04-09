@@ -17,4 +17,4 @@ COPY tests tests/
 RUN pip install -r web/requirements.txt
 
 # Run that beautiful Jobber Web aoo
-CMD ["python", "web/jobber.py"]
+CMD ["python", "web/jobber_web.py"]
