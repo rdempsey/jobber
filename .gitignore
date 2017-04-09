@@ -83,4 +83,5 @@ tests/logs
 .condaauto
 
 # Data
+data/*
 jobber/api/data/*
