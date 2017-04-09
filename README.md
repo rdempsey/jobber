@@ -1,8 +1,12 @@
 # Jobber
 
+## Overview
+
 Being able to automatically filter out applications from unqualified applicants can save busy hiring managers a lot of time.
 They only need to spend time looking at applicants who meet their minimum qualifications.  Why waste time reading through
 delivery driver applications from people who don’t have a vehicle if you require drivers to use their own vehicle?
+
+## Requirements
 
 Jobber determines whether a job application meets a set of minimum qualifications:
 
@@ -11,20 +15,28 @@ Jobber determines whether a job application meets a set of minimum qualification
 * If an applicant fails to answer any one of these questions with an acceptable answer, their application should be rejected. Otherwise the application should be accepted.
 * The employer should be able to view only the accepted applications.
 
-Jobber achieves the following by:
+Additionally:
+
+* Accepted applications must have all questions answered correctly.
+* Accepted applications must be shown to the employer.
+* Unaccepted applications must not be shown to the employer.
+
+## Meeting the Requirements
+
+Jobber achieves the above by:
 
 Accepting a list of questions with an acceptable answer for each question:
 ```
 [
     {
-        Id: "id1",
-        Question: "string",
-        Answer: "string"
+        id: "id1",
+        question: "string",
+        answer: "string"
     },
     {
-        Id: "id2",
-        Question: "string",
-        Answer: "string"
+        id: "id2",
+        question: "string",
+        answer: "string"
     },
     ...
 ]
@@ -36,20 +48,38 @@ Receives job applications where each application is a JSON document conforming t
     Name: "string",
     Questions: [
         {
-            Id: "id10", Answer: "string"
+            id: "id10",
+            answer: "string"
         },
         {
-            Id: "id20", Answer: "string"
+            id: "id20",
+            answer: "string"
         },
         ...
     ]
 }
 ```
 
-Jobber then decides to either accept or reject each application.
+Upon receiving the job application Jobber decides to either accept or reject each application.
 
-Additionally:
+## Quickstart
 
-* Accepted applications must have all questions answered correctly.
-* Accepted applications must be shown to the employer.
-* Unaccepted applications must not be shown to the employer.
+### Requirements
+
+Jobber has been tested with the following:
+
+* Docker >= 1.13
+* Docker Compose >= 1.8.0
+
+### Running Jobber
+
+Jobber is fully dockerized and consists of two containers: 1) an API-only backend, and 2) a Flask web application front-end.
+To build and run the containers do the following:
+
+```
+git clone git@github.com:rdempsey/jobber.git
+cd jobber
+docker-compose up --build -d
+```
+
+Open a web browser to `http://localhost:5000` to reach the Jobber dashboard. In addition, the API documentation is available at `http://localhost:8080/1.0/ui/`
