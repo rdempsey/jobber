@@ -77,11 +77,11 @@ class JobApplication(Base):
         return dict([(k, v) for k, v in vars(self).items() if not k.startswith('_')])
 
 
-def init_db():
+def init_db(uri):
     """
     Initialize the database connection.
     """
-    db_dir= getenv('DB_DIR', '../../data')
+    db_dir= getenv('DB_DIR', './data')
     db_file_name = getenv('DB_FILE_NAME', 'jobber.db')
     db_engine = 'sqlite:///{}/{}'.format(db_dir, db_file_name)
     engine = create_engine(db_engine, convert_unicode=True)
