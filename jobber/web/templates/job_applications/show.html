@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h2>Job Application for {{ job_application['name'] }}</h2>
+    <div>&nbsp;</div>
+    <p><strong>Application ID</strong>: {{ job_application['id'] }}</p>
+    <p><strong>Created On</strong>: {{ momentjs(job_application['created_at']).format('LLL') }}</p>
+    <div>&nbsp;</div>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for answer in job_application['applicant_responses'] %}
+            <tr>
+                <td>{{ answer['question'] }}</td>
+                <td>{{ answer['answer'] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

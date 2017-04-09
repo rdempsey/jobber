@@ -147,8 +147,8 @@ parameters:
 
 definitions:
   Question:
-    type: object
     required:
+      - id
       - question
       - answer
     properties:
@@ -183,7 +183,6 @@ definitions:
         example: "2015-07-07T15:51:51.230+02:00"
         readOnly: true
   JobApplication:
-    type: object
     description: Job application
     required:
       - name

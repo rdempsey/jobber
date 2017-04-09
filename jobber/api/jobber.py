@@ -2,10 +2,13 @@ import connexion
 import datetime
 import logging
 from os import getenv
+from collections import defaultdict
 import jobber_orm as jorm
 import jobber_api_utils as jau
 
 db_session = None
+
+nested_dict = lambda: defaultdict(nested_dict)
 
 
 def get_questions():
@@ -22,7 +25,7 @@ def get_questions():
     if db_response is None:
         response_info = jau.create_return_object()
     else:
-        response_data = dict()
+        response_data = nested_dict()
         response_data['questions'] = list()
         for question in db_response:
             response_data['questions'].append(question.dump())
@@ -121,8 +124,9 @@ def get_job_applications():
     if db_response is None:
         response_info = jau.create_return_object()
     else:
-        response_data = dict()
+        response_data = nested_dict()
         response_data['job_applications'] = list()
+
         for job_application in db_response:
             response_data['job_applications'].append(job_application.dump())
 
@@ -148,8 +152,27 @@ def get_job_application(job_application_id):
                                                   error_message="Not Found")
         return error_response, 404
     else:
+        job_application = nested_dict()
+
         response_data = db_response.dump()
-        response_info = jau.create_return_object(data=response_data)
+
+        job_application['name'] = response_data['name']
+        job_application['id'] = response_data['id']
+        job_application['created_at'] = response_data['created_at']
+        job_application['updated_at'] = response_data['updated_at']
+        job_application['applicant_responses'] = list()
+
+        for ar in response_data['applicant_responses']:
+            q_db_response = db_session.query(jorm.Question).filter(jorm.Question.id == ar['id']).one_or_none()
+            q_response_data = q_db_response.dump()
+
+            q_response = nested_dict()
+            q_response['question'] = q_response_data['question']
+            q_response['answer'] = ar['answer']
+
+            job_application['applicant_responses'].append(q_response)
+
+        response_info = jau.create_return_object(data=job_application)
         return response_info, 200
 
 

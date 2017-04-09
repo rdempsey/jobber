@@ -2,7 +2,7 @@ import json
 from os import getenv
 from sqlalchemy import Boolean, Column, DateTime, String, TypeDecorator, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 
 Base = declarative_base()
 
