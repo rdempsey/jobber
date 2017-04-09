@@ -1,5 +1,7 @@
 # Jobber
 
+![Image of Jobber 1.0](https://github.com/rdempsey/jobber/docs/Jobber_1.0.png)
+
 ## Overview
 
 Being able to automatically filter out applications from unqualified applicants can save busy hiring managers a lot of time.
