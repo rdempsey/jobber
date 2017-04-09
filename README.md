@@ -1,6 +1,6 @@
 # Jobber
 
-![Image of Jobber 1.0](https://github.com/rdempsey/jobber/docs/Jobber_1.0.png)
+![Image of Jobber 1.0](docs/Jobber_1.0.png)
 
 ## Overview
 
