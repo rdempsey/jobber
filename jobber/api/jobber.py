@@ -119,7 +119,7 @@ def get_job_applications():
     """
     logging.info("get_job_applications endpoint called")
 
-    db_response = db_session.query(jorm.JobApplication)
+    db_response = db_session.query(jorm.JobApplication).filter(jorm.JobApplication.accepted == 1)
 
     if db_response is None:
         response_info = jau.create_return_object()
