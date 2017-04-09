@@ -3,6 +3,8 @@ connexion==1.1.9
 tornado==4.4.3
 flask==0.12.1
 SQLAlchemy>=1.1.9
+python-levenshtein==0.12.0
+fuzzywuzzy==0.15.0
 mock==2.0.0
 pytest==3.0.7
 pytest-mock==1.6.0

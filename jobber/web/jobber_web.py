@@ -1,3 +1,10 @@
+"""
+jobber.web.jobber_web
+~~~~~~~~~~~~~~~~~~~~~
+REST endpoints for the Jobber web app.
+
+"""
+
 from datetime import datetime
 import requests
 from os import getenv
@@ -22,11 +29,17 @@ nested_dict = lambda: defaultdict(nested_dict)
 
 @app.route('/')
 def show_home_page():
+    """
+    Show the dashboard.
+    """
     return render_template('dashboard.html')
 
 
 @app.route('/job-applications', methods = ['GET'])
 def show_job_applications():
+    """
+    Show the list of accepted job applications.
+    """
     job_applications = list()
 
     r = requests.get(application_endpoint)
@@ -45,6 +58,9 @@ def show_job_applications():
 
 @app.route('/job-applications/<job_application_id>', methods = ['GET'])
 def show_job_application(job_application_id):
+    """
+    Show a single job application.
+    """
     url = "{}/{}".format(application_endpoint, job_application_id)
     r = requests.get(url)
     response = r.json()
@@ -58,6 +74,9 @@ def show_job_application(job_application_id):
 
 @app.route('/apply', methods = ['GET'])
 def apply_for_job():
+    """
+    Show the job application form.
+    """
     questions = list()
 
     r = requests.get(questions_endpoint)
@@ -74,6 +93,9 @@ def apply_for_job():
 
 @app.route('/save-job-application', methods = ['POST'])
 def save_job_application():
+    """
+    Save a job application and redirect to the job applications page.
+    """
     aid = uuid.uuid5(uuid.NAMESPACE_DNS, 'jobber')      # application name
     aid = uuid.uuid5(aid, request.form['applicant_name'])         # applicant name
     aid = uuid.uuid5(aid, str(datetime.utcnow()))            # current_time
@@ -96,6 +118,9 @@ def save_job_application():
 
 @app.route('/questions', methods = ['GET', 'POST'])
 def show_questions():
+    """
+    Show the questions list page.
+    """
 
     if request.method == 'POST':
         qid = uuid.uuid5(uuid.NAMESPACE_DNS, 'jobber')      # application name
@@ -120,13 +145,16 @@ def show_questions():
         question['updated_at'] = datetime.strptime(question['updated_at'], '%Y-%m-%dT%H:%M:%S.%fZ')
         questions.append(question)
 
-    sorted_questions = sorted(questions, key=lambda k: k['id'], reverse=False)
+    sorted_questions = sorted(questions, key=lambda k: k['created_at'], reverse=False)
 
     return render_template('questions/list.html', questions=sorted_questions)
 
 
 @app.route('/questions/<question_id>', methods = ['POST'])
 def update_question(question_id):
+    """
+    Update a question and redirect to the questions page.
+    """
     try:
         question_data = {
             "id": question_id,
@@ -143,6 +171,9 @@ def update_question(question_id):
 
 @app.route('/questions/<question_id>', methods = ['GET'])
 def edit_question(question_id):
+    """
+    Render the question edit page.
+    """
     url = "{}/{}".format(questions_endpoint, question_id)
     r = requests.get(url)
     response = r.json()

@@ -3,7 +3,7 @@ MAINTAINER Robert Dempsey <robertonrails@gmail.com>
 
 # Install OS requirements
 ENV PYTHONBUFFERED 1
-RUN apt-get update -y -qq
+RUN apt-get update && apt-get -y install gcc
 
 # Set up the code directory
 RUN mkdir -p /usr/src/app

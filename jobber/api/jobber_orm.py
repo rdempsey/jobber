@@ -8,7 +8,9 @@ Base = declarative_base()
 
 
 class Json(TypeDecorator):
-
+    """
+    Json class for storing json data
+    """
     impl = String
 
     def process_bind_param(self, value, dialect):
@@ -19,6 +21,9 @@ class Json(TypeDecorator):
 
 
 class Question(Base):
+    """
+    Question class.
+    """
     __tablename__ = 'questions'
     id = Column(String(250), primary_key=True)
     question = Column(String(250))
@@ -43,6 +48,9 @@ class Question(Base):
 
 
 class JobApplication(Base):
+    """
+    JobApplication class.
+    """
     __tablename__ = 'job_applications'
     id = Column(String(250), primary_key=True)
     name = Column(String(255))
@@ -69,9 +77,12 @@ class JobApplication(Base):
         return dict([(k, v) for k, v in vars(self).items() if not k.startswith('_')])
 
 
-def init_db(uri):
-    db_dir= getenv('DB_DIR')
-    db_file_name = getenv('DB_FILE_NAME')
+def init_db():
+    """
+    Initialize the database connection.
+    """
+    db_dir= getenv('DB_DIR', '../../data')
+    db_file_name = getenv('DB_FILE_NAME', 'jobber.db')
     db_engine = 'sqlite:///{}/{}'.format(db_dir, db_file_name)
     engine = create_engine(db_engine, convert_unicode=True)
     db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))

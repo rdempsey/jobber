@@ -23,7 +23,7 @@ Additionally:
 
 ## Meeting the Requirements
 
-Jobber achieves the above by:
+Jobber achieves the above by providing an API that:
 
 Accepting a list of questions with an acceptable answer for each question:
 ```
@@ -81,5 +81,7 @@ git clone git@github.com:rdempsey/jobber.git
 cd jobber
 docker-compose up --build -d
 ```
+
+If need be you can edit the provided docker-compose file to change the ports.
 
 Open a web browser to `http://localhost:5000` to reach the Jobber dashboard. In addition, the API documentation is available at `http://localhost:8080/1.0/ui/`

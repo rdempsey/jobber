@@ -2,6 +2,18 @@
 {% block body %}
     <h2>Apply for a Job</h2>
     <div>&nbsp;</div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Instructions</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                Be sure you answer all of the questions. Failure to answer all questions will result in your application
+                being rejected. Keep all of your answers short and to the point for the best chance of making it to the
+                next round!
+            </p>
+        </div>
+    </div>
     <fieldset>
         <form action="{{ url_for('save_job_application') }}" method="post" class="form-horizontal">
             <div class="form-group">

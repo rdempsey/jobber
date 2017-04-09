@@ -1,3 +1,10 @@
+"""
+jobber.api.jobber
+~~~~~~~~~~~~~~~~~
+Functions making up the Jobber API
+
+"""
+
 import connexion
 import datetime
 import logging
@@ -15,7 +22,7 @@ def get_questions():
     """
     Get a list of questions.
 
-    :return: questions
+    :return: all questions in the database
     :rtype: dict
     """
     logging.info("get_questions endpoint called")
@@ -39,7 +46,7 @@ def get_question(question_id):
     """
     Get a single question.
 
-    :param question_id: ID of the question
+    :param question_id: Unique id of the question
     :return: a single question
     :rtype: dict
     """
@@ -92,7 +99,8 @@ def delete_question(question_id):
     Delete a question
 
     :param int question_id: ID of the question
-    :return: HTTP status code
+    :return: success or failure message
+    :rtype: dict
     """
     logging.info("delete_question endpoint called")
 
@@ -112,7 +120,7 @@ def delete_question(question_id):
 
 def get_job_applications():
     """
-    Get a list of accepted job applications
+    Get all of the accepted job applications
 
     :return: approved job applications
     :rtype: dict
@@ -198,7 +206,17 @@ def put_job_application(job_application_id, job_application):
         logging.info("Creating job application {}".format(job_application_id))
         job_application['created_at'] = datetime.datetime.utcnow()
         job_application['updated_at'] = datetime.datetime.utcnow()
-        db_session.add(jorm.JobApplication(**job_application))
+
+        all_questions = get_questions()
+
+        application_questions = dict()
+        for question in all_questions[0]['data']['questions']:
+            application_questions[question['id']] = question['answer']
+
+        scored_application = jau.score_job_application(application_questions=application_questions,
+                                                       job_application=job_application)
+
+        db_session.add(jorm.JobApplication(**scored_application))
         response = jau.create_return_object()
 
     db_session.commit()
@@ -211,7 +229,8 @@ def delete_job_application(job_application_id):
     Delete a job application.
 
     :param int job_application_id: ID of the job application
-    :return: HTTP status code
+    :return: success or failure response
+    :rtype: dict
     """
     logging.info("delete_job_application endpoint called")
 
